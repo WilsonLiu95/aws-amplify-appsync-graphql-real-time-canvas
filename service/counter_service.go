@@ -205,7 +205,7 @@ func FollowListHandler(w http.ResponseWriter, r *http.Request) {
 func TestEndGateHandler(w http.ResponseWriter, r *http.Request) {
 
 	// domain := "http://douyincloud.gateway.egress.ivolces.com"
-	domain := "https://developer.toutiao.com"
+	domain := "http://developer.toutiao.com"
 	path := "/api/v2/tags/text/antidirt"
 
 	//payload := strings.NewReader(`{"access_token": "0801121846765a5a4d2f6b385a68307237534d43397a667865513d3d","appname": "douyin"}`)
