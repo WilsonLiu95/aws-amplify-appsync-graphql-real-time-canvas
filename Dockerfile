@@ -11,7 +11,7 @@ RUN apk add ca-certificates
 RUN apk add --update --no-cache nodejs npm
 
 # # 指定工作目录
-WORKDIR /app
+WORKDIR /opt/application
 
 # 拷贝包管理文件
 COPY package*.json /app
@@ -24,10 +24,11 @@ RUN npm config set registry https://mirrors.cloud.tencent.com/npm/
 RUN npm install
 
 # 将当前目录（dockerfile所在目录）下所有文件都拷贝到工作目录下（.gitignore中的文件除外）
-COPY . /app
+COPY . /opt/application
+USER root
 
 # 执行启动命令.
 # 写多行独立的CMD命令是错误写法！只有最后一行CMD命令会被执行，之前的都会被忽略，导致业务报错。
 # 请参考[Docker官方文档之CMD命令](https://docs.docker.com/engine/reference/builder/#cmd)
-CMD ["npm", "start"]
-# CMD /opt/application/run.sh
+# CMD ["npm", "start"]
+CMD /opt/application/run.sh

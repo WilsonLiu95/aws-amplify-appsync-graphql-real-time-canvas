@@ -4,7 +4,7 @@ const logger = require("koa-logger");
 const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
-const { init: initDB, Counter } = require("./db");
+// const { init: initDB, Counter } = require("./db");
 
 const router = new Router();
 
@@ -16,30 +16,30 @@ router.get("/", async (ctx) => {
 });
 
 // 更新计数
-router.post("/api/count", async (ctx) => {
-  const { request } = ctx;
-  const { action } = request.body;
-  if (action === "inc") {
-    await Counter.create();
-  } else if (action === "clear") {
-    await Counter.destroy({
-      truncate: true,
-    });
-  }
+// router.post("/api/count", async (ctx) => {
+//   const { request } = ctx;
+//   const { action } = request.body;
+//   if (action === "inc") {
+//     await Counter.create();
+//   } else if (action === "clear") {
+//     await Counter.destroy({
+//       truncate: true,
+//     });
+//   }
 
-  ctx.body = {
-    code: 0,
-    data: await Counter.count(),
-  };
-});
+//   ctx.body = {
+//     code: 0,
+//     data: await Counter.count(),
+//   };
+// });
 
 // 获取计数
 router.get("/api/count", async (ctx) => {
-  const result = await Counter.count();
+  // const result = await Counter.count();
 
   ctx.body = {
     code: 0,
-    data: result,
+    data: '/api/count',
   };
 });
 
@@ -55,6 +55,7 @@ router.get("/v1/ping", async (ctx) => {
   if (ctx.request.headers["x-wx-source"]) {
     ctx.body = ctx.request.headers["x-wx-openid"];
   }
+  return 'ok';
 });
 
 
@@ -65,9 +66,9 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-const port = process.env.PORT || 8000;
+  console.log(`_FAAS_RUNTIME_PORT:${process.env._FAAS_RUNTIME_PORT}`)
+const port = process.env._FAAS_RUNTIME_PORT || 8000;
 async function bootstrap() {
-  await initDB();
   app.listen(port, () => {
     console.log("启动成功", port);
   });
