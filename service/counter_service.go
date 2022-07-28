@@ -147,7 +147,7 @@ func CounterHandler(w http.ResponseWriter, r *http.Request) {
 func FollowListHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 
-	domain := "https://open.douyin.com"
+	domain := "http://open.douyin.com"
 	path := "/following/list/"
 
 	client := http.Client{Timeout: 1000 * time.Millisecond}
